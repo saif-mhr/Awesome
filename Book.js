@@ -7,7 +7,7 @@ import {
 const Book = props => {
    return (
        <View>
-           <Text>
+           <Text onPress={props.click}>
               Title: {props.title} - Author: {props.author}
            </Text>
            {props.children}
