@@ -2,15 +2,16 @@ import React from "react";
 import {
   View,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
+  StyleSheet
 } from "react-native";
 
 const Book = props => {
    return (
-       <View>
+       <View style={styles.container}>
 
-       <TouchableOpacity onPress={props.click}>
-           <Text>
+       <TouchableOpacity onPress={props.click} style={{backgroundColor:'silver'}}>
+           <Text style={[{fontWeight: 'bold', color:'green'} , styles.otherText]}>
               Title: {props.title} - Author: {props.author}
            </Text>
            {props.children}
@@ -19,4 +20,16 @@ const Book = props => {
    );
 }
 
+const styles = StyleSheet.create({
+   container:{
+    alignSelf:'center',
+     alignContent:'center',
+     flexDirection:'column',
+     borderStyle:'solid'
+   },
+
+   otherText:{
+     fontSize:22
+   }
+});
 export default Book;
