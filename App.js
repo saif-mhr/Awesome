@@ -3,8 +3,7 @@ import React, { Component } from "react";
 import {
   View,
   Text,
-  Button,
-  TextInput
+  Button
 } from "react-native";
 
 import Book from "./Book";
@@ -15,61 +14,104 @@ export default class App extends Component {
     books: [
       { title: "Java", author: "Herbert" },
       { title: "React", author: "Facebook" },
-      { title: "Oracle", author: "Sun" }
+      { title: "Oracle", author: "Sun" },
+      { title: ".NET", author: "Microsoft" }
     ],
-    
-    nameValue:''
+
+    isVisible: false
   };
 
-  onChangeBookNameHandler = newTitle => {
-     this.setState({
+  // onChangeBookNameHandler = newTitle => {
+  //    this.setState({
+  //     books: [
+  //       { title: newTitle, author: "Khan" },
+  //       { title: "React", author: "Facebook" },
+  //       { title: "Oracle", author: "Sun" }
+  //     ]
+  //    });
+  // };
+
+  changeTextHandler = text => {
+    this.setState({
       books: [
-        { title: newTitle, author: "Khan" },
-        { title: "React", author: "Facebook" },
+        { title: "Java", author: "Herbert" },
+        { title: text, author: "Facebook" },
         { title: "Oracle", author: "Sun" }
       ]
-     });
+    });
+  }
+
+  toggleBookHandler = () => {
+    const isVisible = this.state.isVisible;
+    this.setState({ isVisible: !isVisible });
+  }
+
+  deleteBookHandler = bookIndex => {
+    const books = this.state.books;
+    books.splice(bookIndex, 1);
+    this.setState({ books: books });
+
   };
 
-  // changeTextHandler = text => {
-  //   this.setState({ nameValue: text });
-  // }
   render() {
-    const { nameValue } = this.state;
+    let books = null;
+
+    if (this.state.isVisible) {
+      books = (
+        <View>
+          {
+            this.state.books.map((book, index) => {
+              return <Book
+                title={book.title}
+                author={book.author}
+                click={this.deleteBookHandler.bind(this, index)}
+              />
+            })
+          }
+          {/* <Book
+            title={this.state.books[0].title}
+            author={this.state.books[0].author}
+          //click={() => this.onChangeBookNameHandler("jre")}
+          >
+            <Text>This is a great book</Text>
+          </Book>
+
+          <Book
+            title={this.state.books[1].title}
+            author={this.state.books[1].author}
+            onChangeBookNameHandler={this.changeTextHandler}
+          />
+
+          <Book
+            title={this.state.books[2].title}
+            author={this.state.books[2].author}
+          /> */}
+        </View>
+      );
+    }
+
     return (
       <View>
-        <Text>My library :</Text>
+        <Text>My Book library :</Text>
 
-        <Book
-          title={this.state.books[0].title}
-          author={this.state.books[0].author}
-          click={() => this.onChangeBookNameHandler("jre")}
-          >
-          <Text>This is a great book</Text>
-        </Book>
-
-        <Book
-          title={this.state.books[1].title}
-          author={this.state.books[1].author}
+        <Button
+          title="Toggle book detail"
+          onPress={this.toggleBookHandler}
         />
 
-        <Book
-          title={this.state.books[2].title}
-          author={this.state.books[2].author}
-        />
+        {books}
+        {/* <Button title="Click me" onPress={this.onChangeBookNameHandler.bind(this, "Jdk 1.5")} /> */}
 
-        <Button title="Click me" onPress={this.onChangeBookNameHandler.bind(this, "Jdk 1.5")} />
-        
-        <TextInput
+        {/* <TextInput
            placeholder="Add your name"
            onChangeText={text => this.setState({ nameValue: text })}
            value={nameValue}
-        />
+        /> */}
 
-        <Button
+        {/* <Button
            onPress={() => alert(`Name: ${nameValue}`) }
            title="Press me" 
-        />
+        /> */}
       </View>
     );
   }
@@ -87,7 +129,7 @@ export default class App extends Component {
 //       { title: "Oracle", author: "Sun" }
 //    ]
 //   );
-  
+
 //   const onChangeBookNameHandler = newTitle => {
 //     updatedBooks(
 //       [

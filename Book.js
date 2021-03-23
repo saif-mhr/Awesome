@@ -1,35 +1,29 @@
 import React from "react";
 import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet
+   View,
+   Text,
+   TouchableOpacity,
+   TextInput
 } from "react-native";
 
 const Book = props => {
    return (
-       <View style={styles.container}>
+      <View>
+         <TouchableOpacity onPress={props.click}>
+            <Text>
+               Title: {props.title} - Author: {props.author}
+            </Text>
+            {props.children}
+         </TouchableOpacity>
 
-       <TouchableOpacity onPress={props.click} style={{backgroundColor:'silver'}}>
-           <Text style={[{fontWeight: 'bold', color:'green'} , styles.otherText]}>
-              Title: {props.title} - Author: {props.author}
-           </Text>
-           {props.children}
-           </TouchableOpacity>
-       </View>
+         <TextInput
+            placeholder="Add your name"
+            onChangeText={props.onChangeBookNameHandler}
+            value={props.title}
+         />
+
+      </View>
    );
 }
 
-const styles = StyleSheet.create({
-   container:{
-    alignSelf:'center',
-     alignContent:'center',
-     flexDirection:'column',
-     borderStyle:'solid'
-   },
-
-   otherText:{
-     fontSize:22
-   }
-});
 export default Book;
